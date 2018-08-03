@@ -24,9 +24,7 @@ public class OldMan extends ListenerAdapter {
 
 	private static void addCommands(JDABuilder jdaBuilder) {
 		HelpCommand help = new HelpCommand();
-
 		jdaBuilder.addEventListener(help.registerCommand(help));
-
 	}
 	
 	

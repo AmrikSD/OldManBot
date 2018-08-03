@@ -1,9 +1,5 @@
 package twitter;
 
-/**@author Amrik <amrik.Singh@live.co.uk>
- * */
-import java.util.List;
-
 import net.dv8tion.jda.core.JDA;
 import twitter4j.DirectMessage;
 import twitter4j.StallWarning;

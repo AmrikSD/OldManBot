@@ -32,7 +32,7 @@ public class OldMan extends ListenerAdapter {
 		// TODO Auto-generated method stub
 		try {
 			JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT)
-					.setToken("MTgwNDUwNDg1Njk2NzI0OTky.DhXhZg.ZGs1_a5Igc05dR2nTWuL_nhzzWY");
+					.setToken("");
 
 			addCommands(jdaBuilder);
 

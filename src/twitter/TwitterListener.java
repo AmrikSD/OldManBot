@@ -1,5 +1,9 @@
 package twitter;
 
+import org.json.simple.JSONObject;
+
+import com.potatoblood.oldman.Config;
+
 import net.dv8tion.jda.core.JDA;
 import twitter4j.DirectMessage;
 import twitter4j.StallWarning;
@@ -15,13 +19,21 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterListener{
 	
 	public static ConfigurationBuilder getConfigBuilder() {
-		System.out.println("connecting to twitter");
+		System.out.println("Connecting to Twitter");
 		ConfigurationBuilder cb = new ConfigurationBuilder();
+		
+		
+		JSONObject twitterJSON = Config.getTwitterJSON();
+		String APIKey = twitterJSON.get("API Key").toString();
+		String APISecret = twitterJSON.get("API Secret").toString();
+		String Token = twitterJSON.get("Token").toString();
+		String TokenSecret = twitterJSON.get("Token Secret").toString();
+			
 		cb.setDebugEnabled(true);
-		cb.setOAuthConsumerKey("DtNQY62jzyvRzUjgy1ZHKmIuU");
-		cb.setOAuthConsumerSecret("ok4W63fjWNlLZKPowkbCBRVxD7k8eZpQivFOyZXoXFmY2KRWFV");
-		cb.setOAuthAccessToken("741423392-7OXT4R8lE8DQ31e2qrVeqpE9QKZegxZBZ06rcED3");
-		cb.setOAuthAccessTokenSecret("NHNsHvvRwvoB9fYXCbczc7vwYpSfxvcNveo00JpZeX6xQ");
+		cb.setOAuthConsumerKey(APIKey);
+		cb.setOAuthConsumerSecret(APISecret);
+		cb.setOAuthAccessToken(Token);
+		cb.setOAuthAccessTokenSecret(TokenSecret);
 
 		return cb;
 	}

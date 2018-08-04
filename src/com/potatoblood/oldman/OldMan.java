@@ -5,12 +5,12 @@ import javax.security.auth.login.LoginException;
 import org.json.simple.JSONObject;
 
 import com.potatoblood.oldman.commands.HelpCommand;
+import com.potatoblood.oldman.twitter.TwitterListener;
 
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import twitter.TwitterListener;
 
 /*
  *	This class is used to initialize the bot.
@@ -19,8 +19,8 @@ import twitter.TwitterListener;
 public class OldMan extends ListenerAdapter {
 
 	public static void main(String[] args) {
-
-		setupBot();
+		
+		setupBot();		
 		
 	}
 
@@ -41,7 +41,7 @@ public class OldMan extends ListenerAdapter {
 
 			JDA jda = jdaBuilder.buildBlocking();
 
-			TwitterListener.StartListener(jda); // Start the politics auto-chat
+			TwitterListener.StartListener(jda); // Start the rip from twitter to discord
 
 		} catch (LoginException | InterruptedException e) {
 

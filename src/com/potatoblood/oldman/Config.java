@@ -11,8 +11,7 @@ public class Config {
 
 	public static JSONObject getDiscordJSON() {
 		JSONParser parser = new JSONParser();
-
-		JSONObject JSONObj = null;
+		JSONObject JSONObj = new JSONObject();
 		
 		try {
 			JSONObj = (JSONObject) parser.parse(new FileReader("./res/config.JSON"));
@@ -25,6 +24,7 @@ public class Config {
 		return DiscordJSON;
 	}
 
+	
 	public static JSONObject getTwitterJSON() {
 		JSONParser parser = new JSONParser();
 		

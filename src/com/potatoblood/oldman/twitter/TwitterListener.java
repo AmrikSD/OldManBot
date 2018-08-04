@@ -1,10 +1,15 @@
-package twitter;
+package com.potatoblood.oldman.twitter;
 
+import java.util.ArrayList;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.potatoblood.oldman.Config;
 
 import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
 import twitter4j.DirectMessage;
 import twitter4j.StallWarning;
 import twitter4j.Status;
@@ -16,221 +21,206 @@ import twitter4j.UserList;
 import twitter4j.UserStreamListener;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class TwitterListener{
-	
+public class TwitterListener {
+
 	public static ConfigurationBuilder getConfigBuilder() {
 		System.out.println("Connecting to Twitter");
+
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-		
-		
+
 		JSONObject twitterJSON = Config.getTwitterJSON();
 		String APIKey = twitterJSON.get("API Key").toString();
 		String APISecret = twitterJSON.get("API Secret").toString();
 		String Token = twitterJSON.get("Token").toString();
 		String TokenSecret = twitterJSON.get("Token Secret").toString();
-			
-		cb.setDebugEnabled(true);
-		cb.setOAuthConsumerKey(APIKey);
-		cb.setOAuthConsumerSecret(APISecret);
-		cb.setOAuthAccessToken(Token);
-		cb.setOAuthAccessTokenSecret(TokenSecret);
+		Boolean enabled = (Boolean) twitterJSON.get("Enabled");
 
-		return cb;
+		if (enabled) {
+			cb.setDebugEnabled(true);
+			cb.setOAuthConsumerKey(APIKey);
+			cb.setOAuthConsumerSecret(APISecret);
+			cb.setOAuthAccessToken(Token);
+			cb.setOAuthAccessTokenSecret(TokenSecret);
+
+			return cb;
+		}
+
+		return null;
 	}
-	
+
 	public static void StartListener(JDA jda) {
 		ConfigurationBuilder cb = getConfigBuilder();
-		TwitterStream ts = new TwitterStreamFactory(cb.build()).getInstance();
-		
-		String PotatoBlood = "121992051406536705";
-		//String Politics = "138449783797972992";
-		String cockandArse = "465154163983122443";
+		if (cb == null) {
+			System.out.println("Twitter Intergrations is  not enabled, or not set up properly.");
+			System.out.println("Functionality requiring twitter will not be available, everything else should be ok.");
+			return;
+		} else {
+			System.out.println("Twitter Functionality seems to be working.");
+			System.out.println("Please make sure your configuration is exaclty how you like it :)");
+		}
 
+		TwitterStream ts = new TwitterStreamFactory(cb.build()).getInstance();
+
+		JSONObject twitterJSON = Config.getTwitterJSON();
+		JSONArray twitAccountsAsJSON = (JSONArray) twitterJSON.get("Accounts");
 		
+		String guildName = (String) twitterJSON.get("Guild Name");
 		
+		ArrayList<String> knownGuilds = new ArrayList<>();
+		
+		for(int i =0;i<jda.getGuilds().size();i++) {
+			knownGuilds.add(jda.getGuilds().get(i).getName());
+		}
+		
+		if(!knownGuilds.contains(guildName)) {
+			System.out.println("OldMan doesn't appear to be connected to " +guildName+".");
+			System.out.println("Perhaps your config file is incorrect, it is caps sensitive!");
+			return;
+		}
+		
+		Guild guild = jda.getGuildsByName(guildName, false).get(0);
+		
+		ArrayList<String> knownChannels = new ArrayList<>();
+		for(int i =0;i<guild.getTextChannels().size();i++) {
+			knownChannels.add(guild.getTextChannels().get(i).getName());
+		}
+		
+		String channelName = (String) twitterJSON.get("Text Channel");
+		if(!knownChannels.contains(channelName)) {
+			System.out.println("OldMan can't appear to find to " +channelName+".");
+			System.out.println("Perhaps your config file is incorrect, it is caps sensitive!");
+			return;
+		}
+		
+		TextChannel textChannel = guild.getTextChannelsByName(channelName, true).get(0);
 		
 		
 		UserStreamListener listener = new UserStreamListener() {
 			
-
 			@Override
 			public void onStatus(Status status) {
 				
-				String message = status.getText();
-				System.out.println(status.getUser().getId());
+				//WHEN A NEW STATUS IS POSTED
+				String tweetersName = status.getUser().getScreenName();
 				
-				jda.getGuildById(PotatoBlood).getTextChannelById(cockandArse).sendMessage(message).queue();
+				if(twitAccountsAsJSON.contains(tweetersName)) {
+					textChannel.sendMessage(tweetersName +": "+status.getText()).queue();
+				}
 				
 			}
-			
+
 			@Override
 			public void onException(Exception arg0) {
-				
-				arg0.printStackTrace();
-				jda.getGuildById(PotatoBlood).getTextChannelById(cockandArse).sendMessage(arg0.toString()).queue(); //Print error
-				
-				
+
 			}
 
 			@Override
 			public void onDeletionNotice(StatusDeletionNotice arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onScrubGeo(long arg0, long arg1) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onStallWarning(StallWarning arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onTrackLimitationNotice(int arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onBlock(User arg0, User arg1) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onDeletionNotice(long arg0, long arg1) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onDirectMessage(DirectMessage arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onFavorite(User arg0, User arg1, Status arg2) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onFavoritedRetweet(User arg0, User arg1, Status arg2) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onFollow(User arg0, User arg1) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onFriendList(long[] arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onQuotedTweet(User arg0, User arg1, Status arg2) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onRetweetedRetweet(User arg0, User arg1, Status arg2) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUnblock(User arg0, User arg1) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUnfavorite(User arg0, User arg1, Status arg2) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUnfollow(User arg0, User arg1) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserDeletion(long arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserListCreation(User arg0, UserList arg1) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserListDeletion(User arg0, UserList arg1) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserListMemberAddition(User arg0, User arg1, UserList arg2) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserListMemberDeletion(User arg0, User arg1, UserList arg2) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserListSubscription(User arg0, User arg1, UserList arg2) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserListUnsubscription(User arg0, User arg1, UserList arg2) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserListUpdate(User arg0, UserList arg1) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserProfileUpdate(User arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onUserSuspension(long arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 		};
 
 		ts.addListener(listener);
 		ts.user();
 	}
-	
+
 }

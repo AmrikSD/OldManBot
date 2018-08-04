@@ -5,6 +5,7 @@ import javax.security.auth.login.LoginException;
 import org.json.simple.JSONObject;
 
 import com.potatoblood.oldman.commands.HelpCommand;
+import com.potatoblood.oldman.commands.RollCommand;
 import com.potatoblood.oldman.twitter.TwitterListener;
 
 import net.dv8tion.jda.core.AccountType;
@@ -27,6 +28,13 @@ public class OldMan extends ListenerAdapter {
 	private static void addCommands(JDABuilder jdaBuilder) {
 		HelpCommand help = new HelpCommand();
 		jdaBuilder.addEventListener(help.registerCommand(help));
+		
+		RollCommand roll = new RollCommand();
+		jdaBuilder.addEventListener(help.registerCommand(roll));
+		
+		
+		
+		
 	}
 
 	private static void setupBot() {

@@ -1,11 +1,19 @@
 {
 	"Twitter":	{
-		"API Key":	"",
-		"API Secret":	"",
-		"Token":	"",
-		"Token Secret":	""
+		"Enabled":	true,
+		"API Key":	"API KEY",
+		"API Secret":	"API SECRET",
+		"Token":	"TOKEN",
+		"Token Secret":	"TOKEN SECRET",
+		"Guild Name": "YOUR SERVER",
+		"Text Channel": "WHERE YOU WANT THE (ACCOUNTS) TO POST",
+		"Accounts":	[
+		"FIRST TWITTER NAME",
+		"SECOND TWITTER NAME"
+		]
+		
 	},
 	"Discord":	{
-		"Token":	""
+		"Token":	"ANOTHER TOKEN FROM DISCORD YAY"
 	}
 }

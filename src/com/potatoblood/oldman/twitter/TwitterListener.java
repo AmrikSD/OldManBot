@@ -24,8 +24,6 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterListener {
 
 	public static ConfigurationBuilder getConfigBuilder() {
-		System.out.println("Connecting to Twitter");
-
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 
 		JSONObject twitterJSON = Config.getTwitterJSON();
@@ -36,6 +34,7 @@ public class TwitterListener {
 		Boolean enabled = (Boolean) twitterJSON.get("Enabled");
 
 		if (enabled) {
+			System.out.println("Twitter Functionality enabled");
 			cb.setDebugEnabled(true);
 			cb.setOAuthConsumerKey(APIKey);
 			cb.setOAuthConsumerSecret(APISecret);
@@ -44,19 +43,22 @@ public class TwitterListener {
 
 			return cb;
 		}
-
 		return null;
 	}
 
 	public static void StartListener(JDA jda) {
+		
+		System.out.println("Getting twitter config");
+		
 		ConfigurationBuilder cb = getConfigBuilder();
+		
 		if (cb == null) {
-			System.out.println("Twitter Intergrations is  not enabled, or not set up properly.");
+			System.out.println("Twitter functinality is either disabled OR set up incorrectly!");
 			System.out.println("Functionality requiring twitter will not be available, everything else should be ok.");
 			return;
 		} else {
 			System.out.println("Twitter Functionality seems to be working.");
-			System.out.println("Please make sure your configuration is exaclty how you like it :)");
+			System.out.println("Please make sure your configuration is correct, if you change it please restart Old Man.");
 		}
 
 		TwitterStream ts = new TwitterStreamFactory(cb.build()).getInstance();

@@ -11,6 +11,7 @@ import com.potatoblood.oldman.twitter.TwitterListener;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 /*
@@ -26,12 +27,16 @@ public class OldMan extends ListenerAdapter {
 	}
 
 	private static void addCommands(JDABuilder jdaBuilder) {
+		
+		MessageLogger logger = new MessageLogger();		
+		jdaBuilder.addEventListener(logger);
+		
+		
 		HelpCommand help = new HelpCommand();
 		jdaBuilder.addEventListener(help.registerCommand(help));
 		
 		RollCommand roll = new RollCommand();
 		jdaBuilder.addEventListener(help.registerCommand(roll));
-		
 		
 		
 		

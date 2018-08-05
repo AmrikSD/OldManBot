@@ -22,6 +22,7 @@ public abstract class Command extends ListenerAdapter {
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent e) {
+		
 		if (e.getAuthor().isBot() && !respondToBots())
 			return;
 		if (containsCommand(e.getMessage()))

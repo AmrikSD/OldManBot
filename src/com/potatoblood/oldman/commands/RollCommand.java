@@ -16,48 +16,45 @@ public class RollCommand extends Command {
 	String ApiURLStart = "https://rolz.org/api/?";
 	String ApiURLEnd = ".json";
 	String APICALLERROR = "Something went wrong rolling your dice, please try again, if it persists moan at Amrik :)";
-	
+
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
-		
-		String userAsMention = e.getAuthor().getAsMention();
-		
-		String mergedString = "1d20"; //default to rolling a d20 if nothing else is given
 
-		if(args.length==2) {
-			mergedString=args[1];
+		String userAsMention = e.getAuthor().getAsMention();
+
+		String mergedString = "1d20"; // default to rolling a d20 if nothing else is given
+
+		if (args.length == 2) {
+			mergedString = args[1];
 		}
-		
-		if(args.length>2) {
+
+		if (args.length > 2) {
 			mergedString = "";
-			for(int i = 1; i<args.length;i++) {
+			for (int i = 1; i < args.length; i++) {
 				mergedString = mergedString.concat(args[i]);
 			}
 		}
-		
+
 		String result;
-		
+
+		e.getChannel().sendTyping().queue(); // Just in case the user knows the bot was at least trying
+
 		try {
 			JSONObject diceData = Unirest.get(ApiURLStart + mergedString + ApiURLEnd).asJson().getBody().getObject();
-			
+
 			result = diceData.get("result").toString();
 			String details = (String) diceData.get("details");
-			
-			
-			
-			String formattedMessage= (userAsMention+" rolling " +mergedString+": "+"*"+result+"*"+"```java\n"+details+"\n```");
+
+			String formattedMessage = (userAsMention + " rolling " + mergedString + ": " + "*" + result + "*"
+					+ "```java\n" + details + "\n```");
 			sendMessage(e, formattedMessage);
-			
-			
+
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			sendMessage(e, APICALLERROR);
 			e1.printStackTrace();
 		}
-		
-		
-		
-		
+
 	}
 
 	@Override

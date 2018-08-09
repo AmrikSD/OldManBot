@@ -5,6 +5,7 @@ import java.util.List;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -52,6 +53,14 @@ public abstract class Command extends ListenerAdapter {
 		return sendMessage(e, new MessageBuilder().append(message).build());
 	}
 
+	
+	/*
+	 * Overloads, allowing possibility to send messages with a messageEmbed  
+	 */
+	protected Message sendMessage(MessageReceivedEvent e, MessageEmbed message) {
+		return sendMessage(e, new MessageBuilder(message).build());
+	}
+	
 	protected boolean respondToBots() {
 		return false;
 	}

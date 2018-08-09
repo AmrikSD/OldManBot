@@ -2,12 +2,12 @@ package com.potatoblood.oldman.commands;
 
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.lf5.util.DateFormatManager;
-import org.json.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.mashape.unirest.http.Unirest;
@@ -16,7 +16,6 @@ import com.potatoblood.oldman.Config;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.entities.MessageEmbed.Field;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class WeatherCommand extends Command {
@@ -77,6 +76,9 @@ public class WeatherCommand extends Command {
 	private MessageEmbed buildMessage(org.json.JSONObject weatherData) {
 		//An Example of each field - https://cdn.discordapp.com/attachments/475468825513558023/476494812585918464/Zc3qwqB.png
 		
+		String OLD_MAN_PIC = "https://i.imgur.com/UaVO49N.png";
+		
+		
 		EmbedBuilder builder = new EmbedBuilder();
 		builder.setColor(Color.blue); //Old Man has a blue party hat cmon now
 		
@@ -127,10 +129,9 @@ public class WeatherCommand extends Command {
 		builder.setImage(baseWeatherIcon + currWeatherIcon + dotPNG);
 
 		builder.setFooter("https://github.com/AmrikSD/OldManBot",
-				"https://cdn.discordapp.com/attachments/465154163983122443/477013766824001546/7k6cbse5.png");
+				OLD_MAN_PIC);
 
-		builder.setThumbnail(
-				"https://cdn.discordapp.com/attachments/465154163983122443/477013766824001546/7k6cbse5.png");
+		builder.setThumbnail(OLD_MAN_PIC);
 
 		return builder.build();
 
@@ -155,19 +156,19 @@ public class WeatherCommand extends Command {
 
 	@Override
 	public String getDescription() {
-
-		return null;
+		return "Gets the current weather!";
 	}
 
 	@Override
 	public String getName() {
-		return null;
+		return "Weather Forcast";
 	}
 
 	@Override
 	public List<String> getUsageInstructions() {
-
-		return null;
+		return Collections.singletonList("!Weather   **OR**  !We *<city>*\n" + "!Weather - returns the weather of the default city in the config file.\n"
+				+ "!weather <city> - Returns the weather of the city.\n"
+				+ "__Example:__ !we London, UK");
 	}
 
 }

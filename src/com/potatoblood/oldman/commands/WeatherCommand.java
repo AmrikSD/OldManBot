@@ -35,8 +35,10 @@ public class WeatherCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 
+		
 		if (!weatherIsEnabled) {
-			sendMessage(e, "Sorry, weather isn't currently enabled!");
+			sendMessage(e, "Sorry, weather functionality isn't currently enabled!");
+			return;
 		}
 
 		String city = defaultCity;

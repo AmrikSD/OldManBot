@@ -34,7 +34,7 @@ public class Config {
 		JSONObject TwitterJSON = (JSONObject) JSONObj.get("Twitter");
 		return TwitterJSON;
 	}
-	
+
 	public static JSONObject getWeatherJSON() {
 
 		try {
@@ -45,5 +45,4 @@ public class Config {
 		JSONObject WeatherJSON = (JSONObject) JSONObj.get("Weather");
 		return WeatherJSON;
 	}
-
 }

@@ -31,6 +31,7 @@ public class OldMan extends ListenerAdapter {
 		RollCommand roll = new RollCommand();
 		jdaBuilder.addEventListener(help.registerCommand(roll));
 
+		
 		if ((Boolean) Config.getWeatherJSON().get("Enabled")) {
 			WeatherCommand weather = new WeatherCommand();
 			jdaBuilder.addEventListener(help.registerCommand(weather));

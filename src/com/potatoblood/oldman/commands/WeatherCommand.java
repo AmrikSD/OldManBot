@@ -66,7 +66,7 @@ public class WeatherCommand extends Command {
 
 			} catch (UnirestException e1) {
 				sendMessage(e,
-						"somethign went wrong with the weather, ask me later or go look outside. If I'm still this cranky ask the person who should be taking care of me to sort me out.");
+						"something went wrong with the weather, ask me later or go look outside. If I'm still this cranky ask the person who should be taking care of me to sort me out.");
 				e1.printStackTrace();
 			}
 		}

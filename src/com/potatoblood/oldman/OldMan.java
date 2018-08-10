@@ -5,8 +5,10 @@ import javax.security.auth.login.LoginException;
 import org.json.simple.JSONObject;
 
 import com.potatoblood.oldman.commands.HelpCommand;
+import com.potatoblood.oldman.commands.PingCommand;
 import com.potatoblood.oldman.commands.RollCommand;
 import com.potatoblood.oldman.commands.WeatherCommand;
+import com.potatoblood.oldman.commands.WoWAucCommand;
 import com.potatoblood.oldman.twitter.TwitterListener;
 
 import net.dv8tion.jda.core.AccountType;
@@ -30,6 +32,12 @@ public class OldMan extends ListenerAdapter {
 
 		RollCommand roll = new RollCommand();
 		jdaBuilder.addEventListener(help.registerCommand(roll));
+		
+		PingCommand ping = new PingCommand();
+		jdaBuilder.addEventListener(help.registerCommand(ping));
+		
+		WoWAucCommand wauc = new WoWAucCommand();
+		jdaBuilder.addEventListener(help.registerCommand(wauc));
 
 		if ((Boolean) Config.getWeatherJSON().get("Enabled")) {
 			WeatherCommand weather = new WeatherCommand();

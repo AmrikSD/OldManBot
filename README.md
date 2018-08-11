@@ -1,4 +1,4 @@
-# OldManBot
+# OldManBot <img src="https://raw.githubusercontent.com/AmrikSD/OldManBot/master/Old_Amrik.png" width="64"><img/>
 ## About OldManBot
 OldManBot is a [Discord](https://discordapp.com/) bot, built with Java 8 and the [JDA](https://github.com/DV8FromTheWorld/JDA) library.
 

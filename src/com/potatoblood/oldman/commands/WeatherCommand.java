@@ -100,7 +100,7 @@ public class WeatherCommand extends Command {
 		builder.setTitle(dayAndTime);
 
 		
-		
+		//////
 		
 		//Variables for the "Description" field.
 		org.json.JSONArray weather = weatherData.getJSONArray("weather");

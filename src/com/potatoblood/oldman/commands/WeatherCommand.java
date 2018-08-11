@@ -105,7 +105,6 @@ public class WeatherCommand extends Command {
 		for (int i = 0; i < weather.length(); i++) {
 			weatherIndex[i] = (org.json.JSONObject) weather.get(i);
 		}
-
 		String description = weatherIndex[0].get("description").toString().toUpperCase();
 		description = description.substring(0, 1).toUpperCase() + description.substring(1).toLowerCase();
 
@@ -126,12 +125,10 @@ public class WeatherCommand extends Command {
 		String baseWeatherIcon = "https://raw.githubusercontent.com/AmrikSD/OldManBot/master/res/weather/";
 		String currWeatherIcon = weatherIndex[0].getString("icon").toString();
 		String dotPNG = ".png";
-		builder.setThumbnail(baseWeatherIcon+currWeatherIcon+dotPNG);
-	
-		//Shameless Plug
-		builder.setFooter("https://github.com/AmrikSD/OldManBot", OLD_MAN_PIC);
+		builder.setThumbnail(baseWeatherIcon + currWeatherIcon + dotPNG);
 
-		
+		// Shameless Plug
+		builder.setFooter("https://github.com/AmrikSD/OldManBot", OLD_MAN_PIC);
 
 		return builder.build();
 

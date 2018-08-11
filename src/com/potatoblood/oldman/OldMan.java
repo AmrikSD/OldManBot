@@ -38,7 +38,7 @@ public class OldMan extends ListenerAdapter {
 		
 		WoWAucCommand wauc = new WoWAucCommand();
 		jdaBuilder.addEventListener(help.registerCommand(wauc));
-
+		
 		
 		if ((Boolean) Config.getWeatherJSON().get("Enabled")) {
 			WeatherCommand weather = new WeatherCommand();

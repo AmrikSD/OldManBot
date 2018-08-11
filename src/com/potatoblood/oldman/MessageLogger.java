@@ -35,5 +35,6 @@ public class MessageLogger extends ListenerAdapter {
 			LogMessage = (TIME + " " + GUILD + " " + CHANNEL + " " + USER + ": " + MESSAGE);
 			System.out.println(LogMessage);
 		}
+		
 	}
 }

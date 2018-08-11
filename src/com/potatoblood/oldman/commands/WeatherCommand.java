@@ -1,11 +1,20 @@
 package com.potatoblood.oldman.commands;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.swing.ImageIcon;
 
 import org.apache.log4j.lf5.util.DateFormatManager;
 import org.json.simple.JSONObject;
@@ -34,8 +43,8 @@ public class WeatherCommand extends Command {
 
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
+		e.getChannel().sendTyping().queue();
 
-		
 		if (!weatherIsEnabled) {
 			sendMessage(e, "Sorry, weather functionality isn't currently enabled!");
 			return;
@@ -76,64 +85,63 @@ public class WeatherCommand extends Command {
 	}
 
 	private MessageEmbed buildMessage(org.json.JSONObject weatherData) {
-		//An Example of each field - https://cdn.discordapp.com/attachments/475468825513558023/476494812585918464/Zc3qwqB.png
-		
-		String OLD_MAN_PIC = "https://i.imgur.com/UaVO49N.png";
-		
-		
+		// An Example of each field -
+		// https://cdn.discordapp.com/attachments/475468825513558023/476494812585918464/Zc3qwqB.png
+
+		String OLD_MAN_PIC = "https://raw.githubusercontent.com/AmrikSD/OldManBot/master/Old_Amrik.png";
+
 		EmbedBuilder builder = new EmbedBuilder();
-		builder.setColor(Color.blue); //Old Man has a blue party hat cmon now
-		
-		//Variables for the "Author" Field
+		builder.setColor(Color.blue); // Old Man has a blue party hat cmon now
+
+		// Variables for the "Author" Field
 		String name = weatherData.getString("name");
 		int id = weatherData.getInt("id");
 		String country = weatherData.getJSONObject("sys").get("country").toString().toUpperCase();
-		
-		builder.setAuthor(name + ", " + country, "https://openweathermap.org/city/" + id,
-				"http://openweathermap.org/images/flags/" + country + ".png");
 
-		//Variables for the "Title" Field
+		builder.setAuthor(name + ", " + country, "https://openweathermap.org/city/" + id,
+				"http://openweathermap.org/images/flags/" + country.toLowerCase() + ".png");
+
+		// Variables for the "Title" Field
 		long dt = weatherData.getLong("dt");
 		Date date = new Date(dt * 1000L);
 		String dayAndTime = new DateFormatManager("EEEE hh:mm a").format(date);
-		
+
 		builder.setTitle(dayAndTime);
 
-		
-		//////
-		
-		//Variables for the "Description" field.
+		// Variables for the "Description" field.
 		org.json.JSONArray weather = weatherData.getJSONArray("weather");
 		org.json.JSONObject[] weatherIndex = new org.json.JSONObject[weather.length()];
 		for (int i = 0; i < weather.length(); i++) {
 			weatherIndex[i] = (org.json.JSONObject) weather.get(i);
 		}
-		
+
 		String description = weatherIndex[0].get("description").toString().toUpperCase();
 		description = description.substring(0, 1).toUpperCase() + description.substring(1).toLowerCase();
-		
+
 		builder.setDescription(description);
 
-		//Variables for the "Field" field(s) - this is done dynamically so the ordering isn't ideal
+		// Variables for the "Field" field(s) - this is done dynamically so the ordering
+		// isn't ideal
 		org.json.JSONObject main = weatherData.getJSONObject("main");
 		Iterator<?> keys = main.keys();
 		while (keys.hasNext()) {
 			String key = (String) keys.next();
-			String BeautifiedKey = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase().replace('_', ' '); 
+			String BeautifiedKey = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase().replace('_', ' ');
 			builder.addField(BeautifiedKey, main.get(key).toString(), true);
 
 		}
-		
-		//Variables for the "Image" field
-		String baseWeatherIcon = "http://openweathermap.org/img/w/";
+
+		// Variables for the "Thumbnail field"
+		String resFolder = ".res/weather/";
 		String currWeatherIcon = weatherIndex[0].getString("icon").toString();
 		String dotPNG = ".png";
-		builder.setImage(baseWeatherIcon + currWeatherIcon + dotPNG);
+		
+		
+		builder.setThumbnail("https://cdn.discordapp.com/attachments/123132983904436226/477781472397492225/1000x.png");
 
-		builder.setFooter("https://github.com/AmrikSD/OldManBot",
-				OLD_MAN_PIC);
-
-		builder.setThumbnail(OLD_MAN_PIC);
+		
+		//Shameless plug
+		builder.setFooter("https://github.com/AmrikSD/OldManBot", OLD_MAN_PIC);
 
 		return builder.build();
 
@@ -168,9 +176,9 @@ public class WeatherCommand extends Command {
 
 	@Override
 	public List<String> getUsageInstructions() {
-		return Collections.singletonList("!Weather   **OR**  !We *<city>*\n" + "!Weather - returns the weather of the default city in the config file.\n"
-				+ "!weather <city> - Returns the weather of the city.\n"
-				+ "__Example:__ !we London, UK");
+		return Collections.singletonList("!Weather   **OR**  !We *<city>*\n"
+				+ "!Weather - returns the weather of the default city in the config file.\n"
+				+ "!weather <city> - Returns the weather of the city.\n" + "__Example:__ !we London, UK");
 	}
 
 }

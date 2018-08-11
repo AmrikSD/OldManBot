@@ -1,9 +1,11 @@
-# OldManBot
+# OldManBot <img src="https://raw.githubusercontent.com/AmrikSD/OldManBot/master/Old_Amrik.png" width="64"><img/>
 ## About OldManBot
 OldManBot is a [Discord](https://discordapp.com/) bot, built with Java 8 and the [JDA](https://github.com/DV8FromTheWorld/JDA) library.
 
 ## License
 OldManBot is licensed under the [GNU General Public License v3.0](http://www.gnu.org/licenses/gpl.txt)
+
+Logo & profile picture created and owned by [Andrew Martin](https://www.instagram.com/andrewmcomics/)
 ## Third Party Licenses
 OldManBot relies of all of these projects
 

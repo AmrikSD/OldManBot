@@ -102,9 +102,13 @@ public class WeatherCommand extends Command {
 		// Variables for the "Description" field.
 		org.json.JSONArray weather = weatherData.getJSONArray("weather");
 		org.json.JSONObject[] weatherIndex = new org.json.JSONObject[weather.length()];
+		for (int i = 0; i < weather.length(); i++) {
+			weatherIndex[i] = (org.json.JSONObject) weather.get(i);
+		}
+
 		String description = weatherIndex[0].get("description").toString().toUpperCase();
 		description = description.substring(0, 1).toUpperCase() + description.substring(1).toLowerCase();
-		
+
 		builder.setDescription(description);
 
 		// Variables for the "Field" field(s) - this is done dynamically so the ordering
@@ -124,9 +128,10 @@ public class WeatherCommand extends Command {
 		String dotPNG = ".png";
 		builder.setThumbnail(baseWeatherIcon+currWeatherIcon+dotPNG);
 	
-		
 		//Shameless Plug
 		builder.setFooter("https://github.com/AmrikSD/OldManBot", OLD_MAN_PIC);
+
+		
 
 		return builder.build();
 

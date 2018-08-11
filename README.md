@@ -17,3 +17,4 @@ OldManBot relies of all of these projects
 | [json-simple](https://github.com/fangyidong/json-simple)  | [Apache License 2.0](https://github.com/fangyidong/json-simple/blob/master/LICENSE.txt)  |
 |[twitter4j](http://twitter4j.org/)|[Apache License 2.0](http://twitter4j.org/en/index.html#license)|
 |[Apache Commons](https://commons.apache.org/)|[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)|
+|[OpenWeatherMap](https://openweathermap.org/)|[Creative Commons Attribution-ShareAlike 4.0 Generic License](https://openweathermap.org/terms)|

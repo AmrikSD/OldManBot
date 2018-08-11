@@ -1,20 +1,11 @@
 package com.potatoblood.oldman.commands;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Image;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.swing.ImageIcon;
 
 import org.apache.log4j.lf5.util.DateFormatManager;
 import org.json.simple.JSONObject;
@@ -88,7 +79,7 @@ public class WeatherCommand extends Command {
 		// An Example of each field -
 		// https://cdn.discordapp.com/attachments/475468825513558023/476494812585918464/Zc3qwqB.png
 
-		String OLD_MAN_PIC = "https://raw.githubusercontent.com/AmrikSD/OldManBot/master/Old_Amrik.png";
+		String OLD_MAN_PIC = "https://i.imgur.com/UaVO49N.png";
 
 		EmbedBuilder builder = new EmbedBuilder();
 		builder.setColor(Color.blue); // Old Man has a blue party hat cmon now
@@ -111,13 +102,9 @@ public class WeatherCommand extends Command {
 		// Variables for the "Description" field.
 		org.json.JSONArray weather = weatherData.getJSONArray("weather");
 		org.json.JSONObject[] weatherIndex = new org.json.JSONObject[weather.length()];
-		for (int i = 0; i < weather.length(); i++) {
-			weatherIndex[i] = (org.json.JSONObject) weather.get(i);
-		}
-
 		String description = weatherIndex[0].get("description").toString().toUpperCase();
 		description = description.substring(0, 1).toUpperCase() + description.substring(1).toLowerCase();
-
+		
 		builder.setDescription(description);
 
 		// Variables for the "Field" field(s) - this is done dynamically so the ordering
@@ -131,16 +118,14 @@ public class WeatherCommand extends Command {
 
 		}
 
-		// Variables for the "Thumbnail field"
-		String resFolder = ".res/weather/";
+		// Variables for the "Thumbnail" field
+		String baseWeatherIcon = "https://raw.githubusercontent.com/AmrikSD/OldManBot/master/res/weather/";
 		String currWeatherIcon = weatherIndex[0].getString("icon").toString();
 		String dotPNG = ".png";
+		builder.setThumbnail(baseWeatherIcon+currWeatherIcon+dotPNG);
+	
 		
-		
-		builder.setThumbnail("https://cdn.discordapp.com/attachments/123132983904436226/477781472397492225/1000x.png");
-
-		
-		//Shameless plug
+		//Shameless Plug
 		builder.setFooter("https://github.com/AmrikSD/OldManBot", OLD_MAN_PIC);
 
 		return builder.build();

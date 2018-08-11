@@ -60,7 +60,7 @@ public class OldMan extends ListenerAdapter {
 			JDA jda = jdaBuilder.buildBlocking();
 
 			if ((Boolean) Config.getTwitterJSON().get("Enabled")) {
-				TwitterListener.StartListener(jda); // Start the rip from twitter to discord
+				TwitterListener.StartListener(jda);
 			}
 
 		} catch (LoginException | InterruptedException e) {

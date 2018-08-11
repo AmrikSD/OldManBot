@@ -87,9 +87,9 @@ public class WeatherCommand extends Command {
 		//Variables for the "Author" Field
 		String name = weatherData.getString("name");
 		int id = weatherData.getInt("id");
-		String country = weatherData.getJSONObject("sys").get("country").toString().toLowerCase();
+		String country = weatherData.getJSONObject("sys").get("country").toString().toUpperCase();
 		
-		builder.setAuthor(name + ", " + country.toUpperCase(), "https://openweathermap.org/city/" + id,
+		builder.setAuthor(name + ", " + country, "https://openweathermap.org/city/" + id,
 				"http://openweathermap.org/images/flags/" + country + ".png");
 
 		//Variables for the "Title" Field
@@ -119,7 +119,7 @@ public class WeatherCommand extends Command {
 		Iterator<?> keys = main.keys();
 		while (keys.hasNext()) {
 			String key = (String) keys.next();
-			String BeautifiedKey = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase().replace('_', ' ');
+			String BeautifiedKey = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase().replace('_', ' '); 
 			builder.addField(BeautifiedKey, main.get(key).toString(), true);
 
 		}

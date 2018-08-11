@@ -47,68 +47,69 @@ public class TwitterListener {
 	}
 
 	public static void StartListener(JDA jda) {
-		
+
 		System.out.println("Getting twitter config");
-		
+
 		ConfigurationBuilder cb = getConfigBuilder();
-		
+
 		if (cb == null) {
 			System.out.println("Twitter functinality is either disabled OR set up incorrectly!");
 			System.out.println("Functionality requiring twitter will not be available, everything else should be ok.");
 			return;
 		} else {
-			System.out.println("Twitter Functionality seems to be working.");
-			System.out.println("Please make sure your configuration is correct, if you change it please restart Old Man.");
+			System.out.println("Connected to Twitter");
+			System.out.println(
+					"Please make sure your configuration is correct, if you need to change it, please restart Old Man.");
 		}
 
 		TwitterStream ts = new TwitterStreamFactory(cb.build()).getInstance();
 
 		JSONObject twitterJSON = Config.getTwitterJSON();
 		JSONArray twitAccountsAsJSON = (JSONArray) twitterJSON.get("Accounts");
-		
+
 		String guildName = (String) twitterJSON.get("Guild Name");
-		
+
 		ArrayList<String> knownGuilds = new ArrayList<>();
-		
-		for(int i =0;i<jda.getGuilds().size();i++) {
+
+		for (int i = 0; i < jda.getGuilds().size(); i++) {
 			knownGuilds.add(jda.getGuilds().get(i).getName());
 		}
-		
-		if(!knownGuilds.contains(guildName)) {
-			System.out.println("OldMan doesn't appear to be connected to " +guildName+".");
-			System.out.println("Perhaps your config file is incorrect, it is caps sensitive!");
+
+		if (!knownGuilds.contains(guildName)) {
+			System.out.println("[WARNING] OldMan doesn't appear to be connected to " + guildName
+					+ ". Twitter functinality will NOT work.");
+			System.out.println("[WARNING] Perhaps your config file is incorrect, it is caps sensitive!");
 			return;
 		}
-		
+
 		Guild guild = jda.getGuildsByName(guildName, false).get(0);
-		
+
 		ArrayList<String> knownChannels = new ArrayList<>();
-		for(int i =0;i<guild.getTextChannels().size();i++) {
+		for (int i = 0; i < guild.getTextChannels().size(); i++) {
 			knownChannels.add(guild.getTextChannels().get(i).getName());
 		}
-		
+
 		String channelName = (String) twitterJSON.get("Text Channel");
-		if(!knownChannels.contains(channelName)) {
-			System.out.println("OldMan can't appear to find to " +channelName+".");
-			System.out.println("Perhaps your config file is incorrect, it is caps sensitive!");
+		if (!knownChannels.contains(channelName)) {
+			System.out.println("[WARNING] OldMan can't find " + channelName + ". Twitter functionality will NOT work");
+			System.out.println("[WARNING] Perhaps your config file is incorrect, it is caps sensitive!");
 			return;
 		}
-		
+
 		TextChannel textChannel = guild.getTextChannelsByName(channelName, true).get(0);
-		
-		
+
 		UserStreamListener listener = new UserStreamListener() {
-			
+
 			@Override
 			public void onStatus(Status status) {
-				
-				//WHEN A NEW STATUS IS POSTED
+
+				// WHEN A NEW STATUS IS POSTED
 				String tweetersName = status.getUser().getScreenName();
-				
-				if(twitAccountsAsJSON.contains(tweetersName)) {
-					textChannel.sendMessage(tweetersName +": "+status.getText()).queue();
+
+				if (twitAccountsAsJSON.contains(tweetersName)) {
+					textChannel.sendMessage(tweetersName + ": " + status.getText()).queue();
 				}
-				
+
 			}
 
 			@Override

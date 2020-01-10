@@ -1,6 +1,6 @@
 {	
   "Discord": {	
-    "Token": "Token from discord yay, google discord dev"	
+    "Token": "Token from discord yay, get from discordapp.com/developer"	
   },	
   "Twitter": {	
     "Enabled": false,	

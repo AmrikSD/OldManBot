@@ -34,10 +34,16 @@ public class ReadPropertyFile{
 			}
 			
 			prop.load(inputStream);	
-			System.out.println("test = " + prop.getProperty("test"));
-		
+			
+			setDiscordToken(prop.getProperty("DiscordToken"));
+			setTwitterAPIKey(prop.getProperty("TwitterAPIKey"));
+			setTwitterAPISecret(prop.getProperty("TwitterAPISecret"));
+			setTwitterToken(prop.getProperty("TwitterToken"));
+			setTwitterTokenSecret(prop.getProperty("TwitterTokenSecret"));
+			setWeatherAPIKey(prop.getProperty("WeatherAPIKey"));
+
 		}catch(Exception e){
-			System.out.println(e);
+			System.out.println("Exception: "+e);
 		}
 		inputStream.close();
 	}

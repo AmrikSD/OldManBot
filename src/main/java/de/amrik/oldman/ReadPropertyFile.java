@@ -13,9 +13,9 @@ import java.net.URL;
 
 public class ReadPropertyFile{
 
-	public static final String CONFIG_FILE = "config.properties";	
+	public static final String CONFIG_FILE = "config.properties";
 	private String DiscordToken;
-	
+
 	private String TwitterAPIKey;
 	private String TwitterAPISecret;
 	private String TwitterToken;
@@ -25,16 +25,16 @@ public class ReadPropertyFile{
 
 	InputStream inputStream;
 	Properties prop = new Properties();
-	
+
 	public void getProperties() throws java.io.IOException {
 		try{
 			inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
 			if (inputStream == null) {
 				throw new FileNotFoundException("property file '" + CONFIG_FILE + "' not found in the classpath");
 			}
-			
-			prop.load(inputStream);	
-			
+
+			prop.load(inputStream);
+
 			setDiscordToken(prop.getProperty("DiscordToken"));
 			setTwitterAPIKey(prop.getProperty("TwitterAPIKey"));
 			setTwitterAPISecret(prop.getProperty("TwitterAPISecret"));

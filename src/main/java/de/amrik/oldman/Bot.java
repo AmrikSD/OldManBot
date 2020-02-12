@@ -6,9 +6,9 @@ import java.io.IOException;
 
 public class Bot{
 	public static void main(String[] args) throws IOException{
-		
+
 		ReadPropertyFile rp = new ReadPropertyFile();
 		rp.getProperties();
-
+		System.out.println(rp.getDiscordToken());
 	}
 }

@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
+import net.dv8tion.jda.api.entities.Activity;
 
 public class Bot extends ListenerAdapter{
 
@@ -33,7 +33,7 @@ public class Bot extends ListenerAdapter{
 		// Actually make the bot, and add the commands to it.
 		try{
 			JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT).setToken(DiscordToken);
-
+			jdaBuilder.setActivity(Activity.playing("Runescape"));
 			//TODO: Add the commands
 
 			// Actually put the bot online

@@ -1,20 +1,23 @@
 package de.amrik.oldman;
 
 import de.amrik.oldman.ReadPropertyFile;
+import de.amrik.oldman.commands.*;
+import de.amrik.oldman.database.MongoDB;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
-
+import java.util.List;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.entities.Activity;
-
+import net.dv8tion.jda.api.entities.Guild;
+/** The core of the bot.
+  * @author Amrik Singh
+  */
 public class Bot extends ListenerAdapter{
-
-
 
 	public static void main(String[] args) throws IOException{
 
@@ -34,13 +37,21 @@ public class Bot extends ListenerAdapter{
 		try{
 			JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT).setToken(DiscordToken);
 			jdaBuilder.setActivity(Activity.playing("Runescape"));
-			//TODO: Add the commands
+
+			// Connect to the DB so we can store messages and so on
+
+
+			// Add all the commands the bot can do
+			HelpCommand helpCommand = new HelpCommand();
+			jdaBuilder.addEventListeners(helpCommand.registerCommand(helpCommand));
 
 			// Actually put the bot online
-			JDA jda = jdaBuilder.build();
-			jda.awaitReady();
+			JDA oldMan = jdaBuilder.build();
+			oldMan.awaitReady();
 
-			System.out.println("Finished Building The Bot");
+			List<Guild> guilds = oldMan.getGuilds();
+
+			System.out.println("Finished Building The Bot, Connected to " + guilds);
 
 
 		}catch(LoginException | InterruptedException e){

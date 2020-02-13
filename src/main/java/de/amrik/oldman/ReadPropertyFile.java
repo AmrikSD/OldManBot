@@ -23,6 +23,9 @@ public class ReadPropertyFile{
 
 	private String WeatherAPIKey;
 
+	private String MongoDatabase;
+	private String MongoClientURI;
+
 	InputStream inputStream;
 	Properties prop = new Properties();
 
@@ -41,11 +44,21 @@ public class ReadPropertyFile{
 			setTwitterToken(prop.getProperty("TwitterToken"));
 			setTwitterTokenSecret(prop.getProperty("TwitterTokenSecret"));
 			setWeatherAPIKey(prop.getProperty("WeatherAPIKey"));
+			setMongoDatabase(prop.getProperty("MongoDatabsae"));
+			setMongoClientURI(prop.getProperty("MongoClientURI"));
 
 		}catch(Exception e){
 			System.out.println("Exception: "+e);
 		}
 		inputStream.close();
+	}
+
+	public void setMongoDatabase(String MongoDatabase){
+		this.MongoDatabase = MongoDatabase;
+	}
+
+	public void setMongoClientURI(String MongoClientURI){
+		this.MongoClientURI = MongoClientURI;
 	}
 
 	public void setDiscordToken(String DiscordToken){
@@ -96,5 +109,13 @@ public class ReadPropertyFile{
 	public String getWeatherAPIKey(){
 		return WeatherAPIKey;
 	}
+	public String getMongoDatabase(){
+		return MongoDatabase;
+	}
+
+	public String getMongoClientURI(){
+		return MongoClientURI;
+	}
+
 
 }

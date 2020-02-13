@@ -29,7 +29,11 @@
 			<version>4.1.1_102</version>
 		</dependency>
 		<!-- end::JDA[] -->
-
+		<dependency>
+			<groupId>net.dv8tion</groupId>
+			<artifactId>JDA</artifactId>
+			<version>4.1.1_108</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

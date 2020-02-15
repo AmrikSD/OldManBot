@@ -45,6 +45,9 @@ public class Bot extends ListenerAdapter{
 			HelpCommand helpCommand = new HelpCommand();
 			jdaBuilder.addEventListeners(helpCommand.registerCommand(helpCommand));
 
+			PingCommand pingCommand = new PingCommand();
+			jdaBuilder.addEventListeners(helpCommand.registerCommand(pingCommand));
+
 			// Actually put the bot online
 			JDA oldMan = jdaBuilder.build();
 			oldMan.awaitReady();

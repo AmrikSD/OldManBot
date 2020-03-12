@@ -17,11 +17,20 @@ import org.bson.Document;
   * @since 0.1.0
   */
 public abstract class MongoDB {
+	
+	private static ReadPropertyFile propertyFile;
+	private static String mongoClientURI;
+	private static int mongoClientPort;
+	private static MongoClient mongoClient;
+	protected static MongoDatabase database;
 
-	private static ReadPropertyFile propertyFile = new ReadPropertyFile();
-	private static MongoClientURI mongoClientURI = new MongoClientURI(propertyFile.getMongoClientURI());
-	private static MongoClient mongoClient = new MongoClient(mongoClientURI);
-	protected static MongoDatabase database = mongoClient.getDatabase(propertyFile.getMongoDatabase());
+	public MongoDB(ReadPropertyFile propertyFile){
+		this.propertyFile = propertyFile;
+		this.mongoClientURI = propertyFile.getMongoClientURI();
+		this.mongoClientPort = propertyFile.getMongoClientPort();
+		this.mongoClient = new MongoClient(mongoClientURI, mongoClientPort);
+		this.database = mongoClient.getDatabase(propertyFile.getMongoDatabase());
+	}
 
 	static void createCollection(MongoDatabase database, String s){
 		Iterator iterator = database.listCollectionNames().iterator();

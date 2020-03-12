@@ -25,6 +25,7 @@ public class ReadPropertyFile{
 
 	private String MongoDatabase;
 	private String MongoClientURI;
+	private int MongoClientPort;
 
 	InputStream inputStream;
 	Properties prop = new Properties();
@@ -44,8 +45,9 @@ public class ReadPropertyFile{
 			setTwitterToken(prop.getProperty("TwitterToken"));
 			setTwitterTokenSecret(prop.getProperty("TwitterTokenSecret"));
 			setWeatherAPIKey(prop.getProperty("WeatherAPIKey"));
-			setMongoDatabase(prop.getProperty("MongoDatabsae"));
+			setMongoDatabase(prop.getProperty("MongoDatabase"));
 			setMongoClientURI(prop.getProperty("MongoClientURI"));
+			setMongoClientPort(prop.getProperty("MongoClientPort"));
 
 		}catch(Exception e){
 			System.out.println("Exception: "+e);
@@ -85,6 +87,10 @@ public class ReadPropertyFile{
 		this.WeatherAPIKey = WeatherAPIKey;
 	}
 
+	// We need to convert from a string to int here
+	public void setMongoClientPort(String MongoClientPort){
+		this.MongoClientPort = Integer.parseInt(MongoClientPort);
+	}
 
 	public String getDiscordToken(){
 		return DiscordToken;
@@ -115,6 +121,10 @@ public class ReadPropertyFile{
 
 	public String getMongoClientURI(){
 		return MongoClientURI;
+	}
+
+	public int getMongoClientPort(){
+		return MongoClientPort;
 	}
 
 

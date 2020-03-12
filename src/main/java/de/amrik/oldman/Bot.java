@@ -2,7 +2,7 @@ package de.amrik.oldman;
 
 import de.amrik.oldman.ReadPropertyFile;
 import de.amrik.oldman.commands.*;
-import de.amrik.oldman.database.MongoDB;
+import de.amrik.oldman.database.GuildDB;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
+
 /** The core of the bot.
   * @author Amrik Singh
   */
@@ -39,7 +40,7 @@ public class Bot extends ListenerAdapter{
 			jdaBuilder.setActivity(Activity.playing("Runescape"));
 
 			// Connect to the DB so we can store messages and so on
-
+			GuildDB guildDB = new GuildDB(rp);
 
 			// Add all the commands the bot can do
 			HelpCommand helpCommand = new HelpCommand();

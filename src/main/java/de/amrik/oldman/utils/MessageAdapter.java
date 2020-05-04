@@ -11,6 +11,8 @@ public class MessageAdapter{
 		return new Document("_id",message.getIdLong())
 			.append("GuildID",message.getGuild().getIdLong())
 			.append("GuildName",message.getGuild().getName())
+			.append("ChannelID",message.getChannel().getIdLong())
+			.append("ChannelName",message.getChannel().getName())
 			.append("Content",message.getContentRaw())
 			.append("AuthorName",message.getAuthor().getName())
 			.append("AuthorID",message.getAuthor().getIdLong());

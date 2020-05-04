@@ -1,5 +1,7 @@
 package de.amrik.oldman.database;
 
+import com.mongodb.client.MongoCollection; 
+
 import de.amrik.oldman.ReadPropertyFile;
 
 import java.util.Collection;
@@ -11,7 +13,16 @@ import de.amrik.oldman.database.MongoDB;
 
 
 public class GuildDB extends MongoDB {
+	
+	private static MongoCollection GuildCollection;
+
 	public GuildDB(ReadPropertyFile pf){
 		super(pf);
+		this.GuildCollection = database.getCollection("discord");
+
+	}
+
+	public MongoCollection getGuildCollection(){
+		return GuildCollection;
 	}
 }

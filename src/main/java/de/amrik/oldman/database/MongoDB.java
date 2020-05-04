@@ -3,6 +3,7 @@ package de.amrik.oldman.database;
 import de.amrik.oldman.ReadPropertyFile;
 
 import java.util.Iterator;
+import java.util.Arrays;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -30,6 +31,10 @@ public abstract class MongoDB {
 		this.mongoClientPort = propertyFile.getMongoClientPort();
 		this.mongoClient = new MongoClient(mongoClientURI, mongoClientPort);
 		this.database = mongoClient.getDatabase(propertyFile.getMongoDatabase());
+		
+		MongoCollection collection = database.getCollection("discord");
+	
+
 	}
 
 	static void createCollection(MongoDatabase database, String s){

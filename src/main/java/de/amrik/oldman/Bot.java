@@ -3,6 +3,7 @@ package de.amrik.oldman;
 import de.amrik.oldman.ReadPropertyFile;
 import de.amrik.oldman.commands.*;
 import de.amrik.oldman.database.GuildDB;
+import de.amrik.oldman.database.MessageLogger;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -41,6 +42,8 @@ public class Bot extends ListenerAdapter{
 
 			// Connect to the DB so we can store messages and so on
 			GuildDB guildDB = new GuildDB(rp);
+			MessageLogger msgLogger = new MessageLogger(guildDB);
+			jdaBuilder.addEventListeners(msgLogger);
 
 			// Add all the commands the bot can do
 			HelpCommand helpCommand = new HelpCommand();

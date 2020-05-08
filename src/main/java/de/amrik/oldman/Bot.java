@@ -49,6 +49,9 @@ public class Bot extends ListenerAdapter{
 			HelpCommand helpCommand = new HelpCommand();
 			jdaBuilder.addEventListeners(helpCommand.registerCommand(helpCommand));
 
+			WeatherCommand weatherCommand = new WeatherCommand(rp);
+			jdaBuilder.addEventListeners(helpCommand.registerCommand(weatherCommand));
+
 			PingCommand pingCommand = new PingCommand();
 			jdaBuilder.addEventListeners(helpCommand.registerCommand(pingCommand));
 

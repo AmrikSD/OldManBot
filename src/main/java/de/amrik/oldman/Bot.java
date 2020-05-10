@@ -3,7 +3,9 @@ package de.amrik.oldman;
 import de.amrik.oldman.ReadPropertyFile;
 import de.amrik.oldman.commands.*;
 import de.amrik.oldman.database.GuildDB;
+import de.amrik.oldman.database.WordDB;
 import de.amrik.oldman.database.MessageLogger;
+import de.amrik.oldman.MessageFilter;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -45,10 +47,15 @@ public class Bot extends ListenerAdapter{
 			MessageLogger msgLogger = new MessageLogger(guildDB);
 			jdaBuilder.addEventListeners(msgLogger);
 
+			// Add the message filter, that will either ban kick or warn bad messages.
+			WordDB wordDB = new WordDB(rp);
+			MessageFilter msgFilter = new MessageFilter(wordDB);
+			jdaBuilder.addEventListeners(msgFilter);
+
 			// Add all the commands the bot can do
 			HelpCommand helpCommand = new HelpCommand();
 			jdaBuilder.addEventListeners(helpCommand.registerCommand(helpCommand));
-
+	
 			WeatherCommand weatherCommand = new WeatherCommand(rp);
 			jdaBuilder.addEventListeners(helpCommand.registerCommand(weatherCommand));
 

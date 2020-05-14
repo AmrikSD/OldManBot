@@ -29,7 +29,7 @@ enum Level{
 	BAN
 }
 
-/** Represets logs every message that is sent to the bot.
+/** Filters every message that is sent to the server, takes appropriate action based upon the word given the databse
   * @author Amrik Singh
   * @version 0.1.0
   * @since 0.1.0
@@ -52,7 +52,7 @@ public class MessageFilter extends ListenerAdapter{
 
 		//If we can't kick them, leave it alone
 		if(!selfMember.canInteract(member)){
-			return;
+			//return;
 		}
 
 		ArrayList<Document> badWords = new ArrayList<Document>();
@@ -61,6 +61,7 @@ public class MessageFilter extends ListenerAdapter{
 		
 
 		try {
+			// Get a list of bad words
 			while (cursor.hasNext()) {
 				badWords.add(cursor.next());
 			}
@@ -69,14 +70,15 @@ public class MessageFilter extends ListenerAdapter{
 			cursor.close();
 			String sentMessage = e.getMessage().getContentRaw();
 			String[] arrOfWords = e.getMessage().getContentRaw().split(" ");
+			// For each word sent in the message, check it against the list of known bad words
 			for(String word: arrOfWords){
 				for(Document d: badWords){
-
+					//if there is a match, punish the user appropriately, given in the bad words list.
 					if(word.toLowerCase().equals(d.getString("word").toLowerCase())) {
 						if(d.getString("punishment").toLowerCase().equals("warn")){
 							Level punishLevel = Level.WARN;
 							warnUser(e,word,punishLevel);
-							return; //punish on first word
+							return; //Only punish once.
 						}
 						if(d.getString("punishment").toLowerCase().equals("kick")){
 							kickUser(e,word);
@@ -93,6 +95,11 @@ public class MessageFilter extends ListenerAdapter{
 		}
 	}
 
+	/** Sends a message to the discord channel stating the bots intentions, either to warn, kick, or ban a user for saying a given word. 
+	 * @author Amrik Singh
+	 * @version 0.1.0
+	 * @since 0.1.0
+	 */
 	private void warnUser(MessageReceivedEvent e, String word, Level lvl){
 		
 		String punishLevel = "**WARN**";
@@ -112,9 +119,13 @@ public class MessageFilter extends ListenerAdapter{
 		repl = " `(" + repl + ")`";
 
 		e.getChannel().sendMessage(e.getAuthor().getAsMention()+" is being automoderated with level "+punishLevel+repl).queue();
+		e.getMessage().delete().queue();
 
 	}
 	
+	/** @see warnUser
+	 *
+	 */
 	private void kickUser(MessageReceivedEvent e, String word){
 
 		warnUser(e,word, Level.KICK);

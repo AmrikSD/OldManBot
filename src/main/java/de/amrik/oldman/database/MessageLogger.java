@@ -16,7 +16,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import org.bson.Document;
 
-/** Represets logs every message that is sent to the bot.
+/** Logs every message that is sent to the bot to a {@link net.dv8tion.jda.api.entities.Channel channel} to a {@link de.amrik.oldman.database.GuildDB GuildDB}
   * @author Amrik Singh
   * @version 0.1.0
   * @since 0.1.0

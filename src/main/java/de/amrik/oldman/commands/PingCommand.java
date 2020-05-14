@@ -34,7 +34,7 @@ public class PingCommand extends Command {
 
     @Override
     public String getDescription(){
-        return "Returns this message. Try !help <Command> for specific help";
+        return "Returns ping, or pong :thinking:";
     }
 
     @Override
